@@ -1,0 +1,131 @@
+LIZENZBEDINGUNGEN – Home Assistant Reader free
+Stand: 25. November 2026
+
+Copyright (c) 2026 Hammerherren GmbH, Am Irrsee 31, 4893 Tiefgraben, Österreich
+(FN 484094 d, Landesgericht Wels). Alle Rechte vorbehalten.
+
+Der Quelltext ist öffentlich einsehbar, steht aber NICHT unter einer
+Open-Source-Lizenz. Mit der Installation der App erklären Sie sich mit diesen
+Bedingungen einverstanden.
+
+
+1. ERLAUBT
+
+Sie dürfen den Home Assistant Reader free ohne Entgelt in Ihrer eigenen
+Home-Assistant-Installation als App installieren, betreiben und nutzen, privat
+und beruflich, und die Seiten des Readers anderen zum Ansehen zugänglich
+machen. Erlaubt ist alles, was für Installation und Betrieb technisch nötig
+ist: das Laden des Repositorys durch Home Assistant, das Bauen des
+Container-Images auf Ihrem Home-Assistant-Host, Sicherungen im Rahmen Ihrer
+Home-Assistant-Backups sowie das Laden und Zwischenspeichern im Browser.
+
+
+2. NICHT ERLAUBT OHNE UNSERE SCHRIFTLICHE ZUSTIMMUNG
+
+- den Programmcode ganz oder teilweise zu kopieren, zu speichern, um ihn
+  weiterzugeben, oder zu verbreiten,
+- die App oder Teile davon auf anderen Servern, in anderen Websites, Produkten
+  oder Diensten bereitzustellen, sie einzubetten (z. B. in Frames) oder zu
+  spiegeln; dazu zählt auch die Aufnahme in andere App-Repositorys,
+- die App zu verändern, den Programmcode zu bearbeiten, zu übersetzen,
+  zurückzuentwickeln oder zu dekompilieren, soweit das nicht gesetzlich
+  zwingend erlaubt ist (§ 40e UrhG),
+- Schutzvermerke, Herstellerangaben oder diese Lizenzbedingungen zu entfernen
+  oder zu umgehen.
+
+Die Seiten, der Programmcode, die Gestaltung und die Texte sind
+urheberrechtlich geschützt (österreichisches Urheberrechtsgesetz, für
+Computerprogramme §§ 40a ff. UrhG).
+
+
+3. BETRIEB IN EIGENER VERANTWORTUNG
+
+Sie betreiben die App und die damit angebotenen Seiten in eigener
+Verantwortung. Insbesondere sind Sie selbst verantwortlich für
+- Impressum und Datenschutzhinweise gegenüber den Besuchern Ihrer Seiten
+  (die App stellt dafür Optionen und Textbausteine bereit),
+- die Auswahl der Dashboards und Werte, die Sie damit zugänglich machen,
+- den Schutz des Zugangs (die free-Version hat keine Anmeldung),
+- Zertifikate und die Sicherheit Ihrer Home-Assistant-Installation.
+
+Die Angaben der Hammerherren GmbH dazu, wie die App mit Daten umgeht, gelten
+nur für die unveränderte App. Die Hammerherren GmbH erhält aus Ihrer
+Installation keine Daten.
+
+
+4. FREMDE BESTANDTEILE
+
+Für die enthaltenen bzw. beim Bauen geladenen fremden Bestandteile gelten
+ausschließlich ihre eigenen Lizenzen; die Einschränkungen oben betreffen sie
+nicht:
+
+- marked – (c) MarkedJS, MIT License
+- DOMPurify – (c) Cure53 und Mitwirkende, Apache License 2.0 oder
+  Mozilla Public License 2.0
+- Apache ECharts – (c) The Apache Software Foundation, Apache License 2.0
+- Material Design Icons (@mdi/js) – (c) Pictogrammers,
+  Pictogrammers Free License, Icons unter Apache License 2.0
+- Fastify und @fastify/static – (c) The Fastify team, MIT License
+- ssh2 – (c) Brian White, MIT License; ssh2-sftp-client – Apache License 2.0
+- weitere Open-Source-Bibliotheken, die diese benötigen, unter MIT-, ISC-,
+  BSD-, BlueOak-1.0.0-, 0BSD- und Unlicense-Lizenz
+- Schriften Oswald und Source Sans 3 – SIL Open Font License 1.1
+
+
+5. KEINE GEWÄHR
+
+Die App wird unentgeltlich und so, wie sie ist, bereitgestellt. Die
+Hammerherren GmbH sichert nicht zu, dass sie fehlerfrei, vollständig,
+ununterbrochen verfügbar oder für einen bestimmten Zweck geeignet ist, und
+dass jeder Wert und jede Karte richtig angezeigt wird. Prüfen Sie wichtige
+Werte direkt in Home Assistant nach. Die App ist nicht für Zwecke bestimmt,
+bei denen eine falsche oder fehlende Anzeige Menschen gefährden oder
+erhebliche Schäden verursachen kann.
+
+Es besteht kein Anspruch auf Updates, Fehlerbehebungen, Support oder darauf,
+dass die App mit künftigen Versionen von Home Assistant funktioniert.
+
+
+6. HAFTUNG
+
+Die Hammerherren GmbH haftet nur für Vorsatz und grobe Fahrlässigkeit, soweit
+gesetzlich zulässig. Für leichte Fahrlässigkeit, für mittelbare Schäden,
+entgangenen Gewinn und Datenverlust ist die Haftung ausgeschlossen. Unberührt
+bleiben die Haftung für Personenschäden und nach dem Produkthaftungsgesetz.
+
+
+7. ENDE DER NUTZUNGSERLAUBNIS
+
+Verstoßen Sie gegen diese Bedingungen, erlischt Ihre Nutzungserlaubnis ohne
+weitere Erklärung. Neue Versionen der App können neuen Bedingungen
+unterliegen; für eine installierte Version gelten die mit ihr ausgelieferten.
+
+
+8. MARKEN
+
+Home Assistant ist eine Marke der Open Home Foundation. Die Hammerherren GmbH
+ist mit der Open Home Foundation nicht verbunden; die App ist kein Produkt von
+Home Assistant.
+
+
+9. SCHLUSSBESTIMMUNGEN
+
+Es gilt österreichisches Recht unter Ausschluss der Verweisungsnormen und des
+UN-Kaufrechts. Für Unternehmer ist Gerichtsstand das für 4893 Tiefgraben
+sachlich zuständige Gericht. Zwingende Rechte von Verbrauchern bleiben
+unberührt. Ist eine Bestimmung unwirksam, bleiben die übrigen wirksam.
+
+Für Lizenzen, eigene Installationen, Anpassungen oder Fragen:
+zeilinger@hammerherren.gmbh
+
+---
+
+Summary (English, for information only – the German text above is binding):
+Source-available, not open source. You may install and use Home Assistant
+Reader free free of charge in your own Home Assistant installation and let
+others view its pages. Copying, redistributing, mirroring, modifying or
+reverse engineering the code requires our written consent. You operate the
+app at your own responsibility (legal notice, privacy information, access
+protection). Provided as is, without warranty; liability limited to intent
+and gross negligence as far as legally permitted. Austrian law applies.
+Third-party components remain under their own licenses.

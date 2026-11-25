@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Architektur Home Assistant Reader free">
+  <defs>
+    <marker id="pfeil" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#111312"/>
+    </marker>
+    <marker id="pfeilGruen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#00753A"/>
+    </marker>
+    <marker id="pfeilGrau" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#555B57"/>
+    </marker>
+  </defs>
+
+  <!-- eigener heller Grund: lesbar im hellen und dunklen HA-Design -->
+  <rect x="0" y="0" width="960" height="540" rx="16" fill="#FFFFFF"/>
+
+  <!-- Titel -->
+  <text x="40" y="52" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="26" font-weight="700" fill="#111312">Home Assistant Reader free – Architektur</text>
+  <rect x="40" y="62" width="120" height="3" fill="#03B050"/>
+
+  <!-- Browser -->
+  <rect x="40" y="196" width="190" height="120" rx="12" fill="#FFFFFF" stroke="#111312" stroke-width="2"/>
+  <rect x="62" y="216" width="146" height="52" rx="4" fill="#F4F6F4" stroke="#111312" stroke-width="1.5"/>
+  <rect x="52" y="268" width="166" height="6" rx="2" fill="#111312"/>
+  <text x="135" y="296" text-anchor="middle" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="17" font-weight="700" fill="#111312">Browser</text>
+  <text x="135" y="306" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="11" fill="#555B57" dy="4">im lokalen Netz</text>
+
+  <!-- Home Assistant OS -->
+  <rect x="320" y="96" width="400" height="390" rx="16" fill="#F4F6F4" stroke="#555B57" stroke-width="1.5"/>
+  <text x="340" y="124" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="16" font-weight="700" fill="#555B57">Home Assistant OS</text>
+
+  <!-- App -->
+  <rect x="345" y="150" width="350" height="128" rx="12" fill="#E1F5E8" stroke="#03B050" stroke-width="3"/>
+  <text x="365" y="180" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="19" font-weight="700" fill="#111312">Home Assistant Reader free</text>
+  <text x="365" y="204" font-family="'Source Sans 3', Arial, sans-serif" font-size="14" fill="#111312">App · eigener Webserver auf Port 443</text>
+  <text x="365" y="226" font-family="'Source Sans 3', Arial, sans-serif" font-size="14" fill="#111312">gibt nur Werte freigegebener Karten weiter</text>
+  <text x="365" y="248" font-family="'Source Sans 3', Arial, sans-serif" font-size="14" fill="#111312">keine Cookies · keine Zugriffsprotokolle</text>
+  <text x="365" y="266" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" fill="#00753A" font-weight="600">nur lesend – kann nichts schalten</text>
+
+  <!-- Supervisor + Core -->
+  <rect x="345" y="370" width="350" height="92" rx="12" fill="#FFFFFF" stroke="#111312" stroke-width="2"/>
+  <text x="365" y="400" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="18" font-weight="700" fill="#111312">Home Assistant Core</text>
+  <text x="365" y="423" font-family="'Source Sans 3', Arial, sans-serif" font-size="14" fill="#111312">Dashboards · Zustände · Verlauf · Statistik</text>
+  <text x="365" y="444" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" fill="#555B57">über den Supervisor erreichbar (Token der App)</text>
+
+  <!-- App ↔ Core -->
+  <line x1="520" y1="282" x2="520" y2="364" stroke="#111312" stroke-width="2" marker-start="url(#pfeil)" marker-end="url(#pfeil)"/>
+  <rect x="530" y="304" width="170" height="40" rx="6" fill="#F4F6F4"/>
+  <text x="536" y="320" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" font-weight="600" fill="#111312">WebSocket, nur lesende</text>
+  <text x="536" y="336" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" font-weight="600" fill="#111312">Anfragen (kein call_service)</text>
+
+  <!-- Browser ↔ App: HTTPS -->
+  <line x1="234" y1="228" x2="340" y2="190" stroke="#00753A" stroke-width="3" marker-start="url(#pfeilGruen)" marker-end="url(#pfeilGruen)"/>
+  <text x="232" y="168" font-family="'Source Sans 3', Arial, sans-serif" font-size="13" font-weight="700" fill="#00753A">HTTPS :443</text>
+  <text x="232" y="184" font-family="'Source Sans 3', Arial, sans-serif" font-size="11" fill="#00753A">mit Zertifikat</text>
+  <!-- Browser ↔ App: HTTP -->
+  <line x1="234" y1="292" x2="340" y2="250" stroke="#555B57" stroke-width="2" stroke-dasharray="6 5" marker-start="url(#pfeilGrau)" marker-end="url(#pfeilGrau)"/>
+  <text x="40" y="346" font-family="'Source Sans 3', Arial, sans-serif" font-size="13" font-weight="700" fill="#555B57">HTTP :443</text>
+  <text x="40" y="362" font-family="'Source Sans 3', Arial, sans-serif" font-size="11" fill="#555B57">übergangsweise, solange noch</text>
+  <text x="40" y="376" font-family="'Source Sans 3', Arial, sans-serif" font-size="11" fill="#555B57">kein Zertifikat vorliegt</text>
+
+  <!-- Zertifikatsquelle -->
+  <rect x="770" y="150" width="160" height="128" rx="12" fill="#FFFFFF" stroke="#111312" stroke-width="2"/>
+  <text x="850" y="178" text-anchor="middle" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="16" font-weight="700" fill="#111312">Zertifikat</text>
+  <text x="850" y="200" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" fill="#111312">SFTP-Server</text>
+  <text x="850" y="216" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" fill="#111312">fullchain.pem</text>
+  <text x="850" y="232" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" fill="#111312">privkey.pem</text>
+  <text x="850" y="262" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="11" fill="#555B57">oder lokal: /ssl</text>
+  <line x1="699" y1="214" x2="764" y2="214" stroke="#111312" stroke-width="2" marker-end="url(#pfeil)"/>
+  <text x="732" y="300" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="12" font-weight="600" fill="#111312" transform="translate(118 0)">SFTP :22, SSH-Schlüssel</text>
+  <text x="850" y="316" text-anchor="middle" font-family="'Source Sans 3', Arial, sans-serif" font-size="11" fill="#555B57">beim Start und alle 24 h</text>
+
+  <!-- Fußnote -->
+  <text x="40" y="516" font-family="'Source Sans 3', Arial, sans-serif" font-size="13" fill="#555B57">Der Browser spricht nie direkt mit Home Assistant, sondern nur mit dem Reader.</text>
+  <text x="920" y="516" text-anchor="end" font-family="Oswald, 'Arial Narrow', sans-serif" font-size="13" font-weight="700" fill="#111312">Hammerherren <tspan font-weight="400" fill="#00753A">IoT</tspan></text>
+</svg>

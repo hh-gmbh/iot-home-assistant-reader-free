@@ -1,0 +1,90 @@
+/* Hell, Farben wie tools.hammerherren.gmbh (siehe brand.css) */
+:root {
+  --bg: var(--hh-grund);
+  --panel: var(--hh-weiss);
+  --line: var(--hh-linie);
+  --text: var(--hh-tinte);
+  --muted: var(--hh-grau);
+  --accent: var(--hh-textgruen);
+  --off: #B3261E;
+  font-family: var(--hh-text, system-ui, sans-serif);
+}
+* { box-sizing: border-box; }
+/* Wie im PFCG-Viewer: Seite genau so hoch wie das Fenster, Kopf- und Fußzeile stehen fest,
+   Navigation und Inhalt scrollen jeweils für sich dazwischen */
+html, body { height: 100%; }
+body { margin: 0; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; background: var(--bg); color: var(--text); }
+#layout { flex: 1 1 auto; display: flex; min-height: 0; }
+main { flex: 1 1 auto; padding: 0 24px 16px; min-width: 0; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+/* Titel bleibt beim Scrollen oben stehen (wie im PFCG-Viewer) */
+.viewhead { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 16px 0 12px; margin-bottom: 4px; background: var(--bg); }
+.viewtitle { font-family: var(--hh-display); font-size: 20px; color: var(--muted); }
+.viewtitle:not(:empty)::before { content: "›"; margin-right: 10px; }
+h1 { font-family: var(--hh-display); font-size: 22px; font-weight: 600; margin: 0; }
+.status { margin-left: auto; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.status.off { background: var(--off); }
+/* auto-fit statt auto-fill: keine leeren Spalten, die Karten nutzen die ganze Breite.
+   Sonst springt das Raster beim Ziehen des Fensters zwischen „breit“ und „schmal + Lücke“. */
+#cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; align-items: start; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; box-shadow: 0 1px 2px rgba(17, 19, 18, .06); }
+.card h3 { margin: 0 0 8px; font-family: var(--hh-display); font-size: 17px; font-weight: 600; }
+.row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row .name { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row .val { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.big { font-size: 28px; font-weight: 600; }
+.glance { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; text-align: center; }
+.glance .name { color: var(--muted); font-size: 12px; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.stack.horizontal { flex-direction: row; }
+.stack.horizontal > * { flex: 1; min-width: 0; }
+.stack.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.stack > .card { border: 0; padding: 0; background: none; box-shadow: none; }
+.heading { grid-column: 1 / -1; font-family: var(--hh-display); font-size: 19px; font-weight: 600; margin-top: 8px; }
+.hinweis { grid-column: 1 / -1; max-width: 48rem; color: var(--muted); }
+/* Kachel wie in HA: Icon im Kreis, Name, Zustand */
+.card.tile { display: flex; align-items: center; gap: 12px; padding: 10px 12px; min-height: 56px; }
+.tile-icon { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+  border-radius: 50%; background: #EAECEE; color: var(--muted); }
+.tile-icon.on { background: var(--hh-hellgruen); color: var(--accent); }
+.tile-icon .icon { width: 20px; height: 20px; color: inherit; }
+.tile-icon .icon:empty { display: none; }
+.tile-text { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.tile-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile-state { font-size: 14px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile-state.on { color: var(--accent); }
+/* Kacheln im Stack/Raster: eigene Fläche behalten, aber flacher */
+.stack > .card.tile { background: var(--hh-grund); padding: 8px 10px; border-radius: 10px; }
+.unsupported { color: var(--muted); font-size: 12px; border-style: dashed; background: transparent; box-shadow: none; }
+.on { color: var(--accent); }
+.unavailable { color: var(--off); }
+.bar { height: 8px; background: var(--line); border-radius: 4px; margin-top: 8px; overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); }
+.icon, ha-icon { display: inline-flex; width: 1.25em; height: 1.25em; vertical-align: -0.25em; flex-shrink: 0; }
+.icon:empty, ha-icon:empty { display: none; }
+.icon svg, ha-icon svg { width: 100%; height: 100%; fill: currentColor; }
+.row .label { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.row .icon { color: var(--muted); }
+.glance .icon { display: flex; margin: 0 auto 2px; width: 22px; height: 22px; color: var(--muted); }
+.glance .icon:empty { display: none; }
+h3.with-icon { display: flex; align-items: center; gap: 8px; }
+.muted { color: var(--muted); font-size: 13px; }
+.graph .chart { width: 100%; }
+.graph .chart + .chart { margin-top: 8px; }
+.markdown { line-height: 1.45; overflow-wrap: anywhere; }
+.markdown > :first-child { margin-top: 0; }
+.markdown > :last-child { margin-bottom: 0; }
+.markdown h1, .markdown h2, .markdown h3 { font-size: 16px; margin: 12px 0 6px; }
+.markdown a { color: var(--accent); }
+.markdown code { background: var(--line); padding: 1px 4px; border-radius: 4px; }
+.markdown pre { background: var(--line); padding: 8px; border-radius: 6px; overflow-x: auto; }
+.markdown pre code { background: none; padding: 0; }
+.markdown blockquote { margin: 8px 0; padding-left: 10px; border-left: 3px solid var(--line); color: var(--muted); }
+.markdown table { border-collapse: collapse; width: 100%; }
+.markdown th, .markdown td { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; }
+.markdown.error { color: var(--off); font-size: 13px; }
+@media (max-width: 700px) {
+  main { padding: 0 12px 12px; }
+  .viewhead { padding-top: 12px; }
+}

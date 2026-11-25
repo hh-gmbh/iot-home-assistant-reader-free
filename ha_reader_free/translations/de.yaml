@@ -1,0 +1,54 @@
+configuration:
+  hostname:
+    name: Hostname
+    description: Name, unter dem der Reader aufgerufen wird. Das Zertifikat muss für diesen Namen ausgestellt sein.
+  cert_source:
+    name: Zertifikatsquelle
+    description: "sftp: per SFTP von einem Server abholen (nur mit SSH-Schlüssel). local: Dateien aus /ssl verwenden."
+  sftp_host:
+    name: SFTP-Server
+    description: Adresse des Servers, auf dem fullchain.pem und privkey.pem liegen.
+  sftp_port:
+    name: SFTP-Port
+    description: Standard 22.
+  sftp_user:
+    name: SFTP-Benutzer
+    description: Benutzer auf dem Server. Dort den öffentlichen Schlüssel aus dem Protokoll in authorized_keys eintragen.
+  sftp_host_key:
+    name: Hostschlüssel des Servers
+    description: "Pflicht für sftp. Zeile aus ssh-keyscan, „ssh-ed25519 AAAA…“ oder nur der Base64-Teil."
+  sftp_fullchain_path:
+    name: Pfad fullchain.pem
+    description: Pfad der Zertifikatskette auf dem Server.
+  sftp_privkey_path:
+    name: Pfad privkey.pem
+    description: Pfad des privaten Schlüssels auf dem Server.
+  local_fullchain:
+    name: Lokale Zertifikatskette
+    description: Pfad unter /ssl, für die Quelle local und als Ausweichquelle.
+  local_privkey:
+    name: Lokaler privater Schlüssel
+    description: Pfad unter /ssl, für die Quelle local und als Ausweichquelle.
+  cert_refresh_hours:
+    name: Abholung alle … Stunden
+    description: Wie oft das Zertifikat neu geholt wird (1–168). Ein neues Zertifikat wird ohne Neustart übernommen.
+  log_level:
+    name: Protokoll-Ausführlichkeit
+    description: Vorgesehen, derzeit noch ohne Wirkung.
+  betreiber_name:
+    name: "Impressum: Name des Betreibers"
+    description: Person oder Firma, die diese Home-Assistant-Installation betreibt. Ohne Eintrag zeigt der Reader kein Impressum an – prüfen Sie, ob Sie für Ihre Seite eines brauchen.
+  betreiber_anschrift:
+    name: "Impressum: Anschrift"
+    description: z. B. „Musterstraße 1, 1234 Musterort, Österreich“.
+  betreiber_kontakt:
+    name: "Impressum: Kontakt"
+    description: E-Mail-Adresse und/oder Telefonnummer.
+  betreiber_zusatz:
+    name: "Impressum: weitere Angaben"
+    description: Optional, z. B. Firmenbuchnummer, UID-Nummer, Unternehmensgegenstand.
+  betreiber_datenschutz_url:
+    name: Link zur eigenen Datenschutzerklärung
+    description: Optional (https://…). Wird im Datenschutzhinweis des Readers verlinkt.
+network:
+  8443/tcp: Port für den Reader im Browser (HTTPS, ohne Zertifikat übergangsweise HTTP)

@@ -1,0 +1,121 @@
+/* Kopf- und Fußzeile wie tools.hammerherren.gmbh (ohne Sprachumschalter).
+   Schriften lokal – SIL Open Font License 1.1 (Oswald, Source Sans 3) */
+@font-face { font-family: "Oswald"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/oswald.woff2") format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/source-sans-3.woff2") format("woff2"); }
+
+/* Hammerherren-Farben */
+:root {
+  --hh-gruen: #03B050; --hh-textgruen: #00753A; --hh-hellgruen: #E1F5E8; --hh-tinte: #111312;
+  --hh-grau-dunkel: #2A302C; --hh-grau: #555B57; --hh-grau-hell: #A3ABA6; --hh-linie: #DFE5E0; --hh-grund: #F4F6F4; --hh-weiss: #FFFFFF;
+  --hh-display: "Oswald", "Arial Narrow", sans-serif; --hh-text: "Source Sans 3", Arial, sans-serif;
+}
+
+/* Kopfzeile: weiß, 3px Tintenlinie */
+.hhKopf { flex: 0 0 auto; display: flex; align-items: center; height: 3.5rem; padding: 0 16px; box-sizing: border-box;
+  background: var(--hh-weiss); border-bottom: 3px solid var(--hh-tinte); color: var(--hh-tinte); }
+.hhMarke { display: flex; align-items: center; gap: 12px; color: var(--hh-tinte); white-space: nowrap; }
+.hhMarkeLink { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; border-radius: 6px; }
+.hhMarkeLink:focus-visible { outline: 3px solid var(--hh-gruen); outline-offset: 3px; }
+.hhSymbol { width: 30px; height: 30px; }
+.hhTrenn { width: 2px; height: 28px; background: var(--hh-tinte); border-radius: 1px; }
+.hhWortmarke { display: flex; flex-direction: column; line-height: 1; font-family: var(--hh-display); }
+.hhWort { font-weight: 700; font-size: 17px; }
+.hhBereich { font-weight: 400; font-size: 15px; margin-top: 2px; align-self: flex-start; border-bottom: 3px solid var(--hh-gruen); padding-bottom: 1px; }
+.hhApp { font-family: var(--hh-display); font-weight: 400; font-size: 20px; line-height: 1; color: var(--hh-tinte); }
+@media (max-width: 900px) { .hhKopf .hhTrenn, .hhKopf .hhApp { display: none; } }
+
+/* Fußzeile: schlank, schwarz */
+.hhFuss { flex: 0 0 auto; background: var(--hh-tinte); color: var(--hh-weiss); font-family: var(--hh-text); }
+.hhFuss-innen { padding: 10px 24px; min-height: 44px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 8px 32px; font-size: 14px; line-height: 1.4; }
+.hhFuss-firma { display: flex; align-items: center; gap: 12px; min-width: 0; color: #D9DED9; }
+.hhFuss-firma img { width: 34px; height: 24px; }
+.hhFuss-text { display: flex; min-width: 0; white-space: nowrap; }
+/* reicht der Platz nicht, wird nur der Produktname gekürzt – die Herstellerangabe bleibt immer ganz */
+.hhProdukt { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.hhTrenner, #herstellerVor, .hhFuss-text > a { flex: none; }
+.hhTrenner, #herstellerVor { white-space: pre; }
+.hhVersion { color: #A3ABA6; }
+.hhFuss-recht { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+/* Unter 600 px: oben der Herstellerblock in einer Zeile, darunter die Links (mind. 16 px Abstand);
+   bei Platzmangel fällt erst die Version, dann der Produktname weg – höchstens drei Zeilen */
+@media (max-width: 599px) {
+  .hhFuss-innen { flex-direction: column; align-items: flex-start; gap: 6px; padding: 8px 16px; }
+  .hhFuss-firma { max-width: 100%; gap: 10px; }
+  .hhFuss-recht { gap: 4px 16px; }
+}
+@media (max-width: 519px) { .hhVersion { display: none; } }
+@media (max-width: 469px) { .hhProdukt, .hhTrenner { display: none; } }
+.hhFuss a { color: var(--hh-weiss); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.hhFuss a:hover, .hhFuss a:focus-visible { text-decoration-color: var(--hh-gruen); text-decoration-thickness: 2px; }
+.hhFuss a:focus-visible { outline: 3px solid var(--hh-gruen); outline-offset: 2px; }
+
+/* Rechtstexte als Dialog (hell, wie auf tools.hammerherren.gmbh) */
+dialog.hhDialog { width: min(44rem, calc(100vw - 32px)); max-height: 80vh; padding: 0; border: 0; border-radius: 12px;
+  background: var(--hh-weiss); color: var(--hh-tinte); font-family: var(--hh-text); box-shadow: 0 12px 40px rgba(0, 0, 0, .45); }
+dialog.hhDialog[open] { display: flex; flex-direction: column; overflow: hidden; }
+dialog.hhDialog::backdrop { background: rgba(17, 19, 18, .6); }
+.hhDialog-kopf { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--hh-linie); }
+.hhDialog-kopf h2 { margin: 0; font-family: var(--hh-display); font-size: 20px; font-weight: 700; }
+.hhDialog-inhalt { flex: 1 1 auto; min-height: 0; padding: 4px 20px 16px; overflow-y: auto; }
+.hhDialog-fuss { display: flex; justify-content: flex-end; padding: 12px 20px; border-top: 1px solid var(--hh-linie); }
+.hhDialog button { font: 600 15px var(--hh-text); color: var(--hh-weiss); background: var(--hh-textgruen); border: 0; border-radius: 8px; padding: 8px 16px; cursor: pointer; }
+.hhDialog button:hover { background: #005C2E; }
+.hhDialog button:focus-visible { outline: 3px solid var(--hh-gruen); outline-offset: 2px; }
+.hhRecht a { color: var(--hh-textgruen); }
+.hhRecht dl { margin: .5rem 0 1rem; }
+.hhRecht dt { font-family: var(--hh-display); font-weight: 700; margin-top: .75rem; }
+.hhRecht dd { margin: 0; line-height: 1.5; }
+.hhRecht h4 { font-family: var(--hh-display); font-weight: 700; font-size: 1rem; margin: 1.1rem 0 .25rem; }
+.hhRecht p { margin: 0 0 .5rem; line-height: 1.5; }
+.hhRecht p.hhKlein { font-size: .9rem; color: #555B57; }
+.hhRecht [hidden], .hhFuss [hidden] { display: none; }
+.hhRecht ul { margin: 0 0 .5rem; padding-left: 1.25rem; line-height: 1.5; }
+
+/* Hinweis rechts in der Kopfzeile: ausgeblendete Dashboards */
+.hhHinweis { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 10px;
+  border: 0; border-radius: 8px; background: transparent; color: #8A5300; font: 600 14px var(--hh-text); cursor: pointer; }
+.hhHinweis[hidden] { display: none; }
+.hhHinweis:hover { background: #FFF4E0; }
+.hhHinweis:focus-visible { outline: 3px solid var(--hh-gruen); outline-offset: 1px; }
+.hhHinweis [data-icon] { display: inline-flex; width: 22px; height: 22px; }
+.hhHinweis svg { width: 100%; height: 100%; fill: currentColor; }
+@media (max-width: 700px) { .hhHinweis-text { display: none; } }
+
+/* Navigation-Schalter in der Kopfzeile (wie PFCG-Viewer) */
+.hhNavToggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin-right: 10px;
+  padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--hh-tinte); cursor: pointer; }
+.hhNavToggle:hover { background: #EAECEE; }
+.hhNavToggle:focus-visible { outline: 3px solid var(--hh-gruen); outline-offset: 1px; }
+.hhNavToggle .icon, .hhNavToggle [data-icon] { display: inline-flex; width: 22px; height: 22px; }
+.hhNavToggle svg { width: 100%; height: 100%; fill: currentColor; }
+
+/* Linke Navigation wie im PFCG-Viewer: weiß, Einträge mit Icon, aktiv hellgrün mit grünem Balken */
+.hhNav { flex: 0 0 auto; width: 15rem; box-sizing: border-box; background: var(--hh-weiss); color: var(--hh-tinte);
+  border-right: 1px solid var(--hh-linie); box-shadow: 2px 0 4px rgba(17, 19, 18, .12);
+  font-family: var(--hh-text); overflow-y: auto; overflow-x: hidden; transition: width .15s ease; }
+.hhNav-liste, .hhNav-sub { list-style: none; margin: 0; padding: 0; }
+.hhNav-liste { padding: 6px 0; }
+.hhNav-eintrag { display: flex; align-items: center; min-height: 48px; margin: 2px 8px; border-radius: 8px; }
+.hhNav-eintrag:hover { background: #EAECEE; }
+.hhNav-link { flex: 1 1 auto; display: flex; align-items: center; gap: 12px; min-width: 0; min-height: 48px; padding: 0 12px;
+  color: inherit; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 8px; }
+.hhNav-link:focus-visible, .hhNav-auf:focus-visible { outline: 3px solid var(--hh-gruen); outline-offset: -3px; }
+.hhNav-link [data-icon] { display: inline-flex; flex: 0 0 auto; width: 20px; height: 20px; }
+.hhNav-link svg, .hhNav-auf svg { width: 100%; height: 100%; fill: currentColor; }
+.hhNav-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hhNav-eintrag.aktiv { background: 0 100% / 3px 100% no-repeat linear-gradient(0deg, var(--hh-gruen), var(--hh-gruen)), var(--hh-hellgruen); }
+/* Aufklappen: Trennstrich + Pfeil */
+.hhNav-auf { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 12px; height: 48px; padding: 0 12px 0 0;
+  border: 0; background: transparent; color: inherit; cursor: pointer; border-radius: 8px; }
+.hhNav-auf::before { content: ""; width: 1px; height: 24px; background: var(--hh-tinte); }
+.hhNav-auf [data-icon] { display: inline-flex; width: 20px; height: 20px; }
+/* Unterpunkte: eingerückt, normale Schrift */
+.hhNav-sub .hhNav-link { padding-left: 44px; font-weight: 400; }
+.hhNav-sub[hidden] { display: none; }
+
+/* Eingeklappt: nur Icons */
+body.navZu .hhNav { width: 56px; }
+body.navZu .hhNav-text, body.navZu .hhNav-auf, body.navZu .hhNav-sub { display: none; }
+body.navZu .hhNav-eintrag { margin: 2px 6px; }
+body.navZu .hhNav-link { justify-content: center; padding: 0; }

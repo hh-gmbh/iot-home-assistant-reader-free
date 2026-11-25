@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Assistant Reader free</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/brand.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="hhKopf">
+    <button id="navToggle" class="hhNavToggle" type="button" aria-controls="nav" aria-expanded="true" title="Navigation ein-/ausblenden">
+      <span data-icon="mdi:menu"></span>
+    </button>
+    <div class="hhMarke">
+      <a class="hhMarkeLink" href="https://hammerherren.gmbh/" target="_blank" rel="noopener noreferrer" title="Hammerherren GmbH">
+        <img class="hhSymbol" src="/brand/iot-symbol.svg" alt="" width="30" height="30">
+        <span class="hhWortmarke"><span class="hhWort">Hammerherren</span><span class="hhBereich">IoT</span></span>
+      </a>
+      <span class="hhTrenn" aria-hidden="true"></span>
+      <span class="hhApp">Home Assistant Reader free</span>
+    </div>
+    <button id="hiddenInfo" class="hhHinweis" type="button" hidden aria-haspopup="dialog">
+      <span data-icon="mdi:alert-circle-outline"></span><span id="hiddenText" class="hhHinweis-text"></span>
+    </button>
+  </header>
+
+  <div id="layout">
+    <aside id="nav" class="hhNav" aria-label="Dashboards">
+      <ul id="dashboards" class="hhNav-liste"></ul>
+    </aside>
+    <main>
+      <header class="viewhead">
+        <h1 id="title"></h1>
+        <span id="viewTitle" class="viewtitle"></span>
+        <span id="status" class="status off"></span>
+      </header>
+      <section id="cards"></section>
+    </main>
+  </div>
+
+  <footer class="hhFuss">
+    <div class="hhFuss-innen">
+      <span class="hhFuss-firma"><img src="/brand/ringe.svg" alt="" width="34" height="24"><span class="hhFuss-text"><span class="hhProdukt">Home Assistant Reader free<span id="version" class="hhVersion"></span></span><span class="hhTrenner" aria-hidden="true"> · </span><span id="herstellerVor">Software von </span><a href="https://hammerherren.gmbh/" target="_blank" rel="noopener noreferrer">Hammerherren GmbH</a></span></span>
+      <nav class="hhFuss-recht" aria-label="Rechtliches">
+        <a href="#impressum" data-legal="impressum" role="button" id="impressumLink" hidden>Impressum</a>
+        <a href="#datenschutz" data-legal="datenschutz" role="button">Datenschutz</a>
+        <a href="#ueber" data-legal="ueber" role="button">Über diese Software</a>
+        <a href="https://bugtracker.hammerherren.gmbh" target="_blank" rel="noopener noreferrer" id="fehlerLink" aria-label="Fehler melden (öffnet in neuem Tab)">Fehler melden<span aria-hidden="true"> ↗</span></a>
+      </nav>
+    </div>
+  </footer>
+
+  <dialog id="ausgeblendet" class="hhDialog" aria-labelledby="ausgeblendet-titel">
+    <div class="hhDialog-kopf"><h2 id="ausgeblendet-titel">Ausgeblendete Dashboards</h2></div>
+    <div class="hhDialog-inhalt hhRecht">
+      <p>Diese Dashboards zeigt der Home Assistant Reader free nicht an, weil es darin nichts darzustellen gibt:</p>
+      <ul id="hiddenList"></ul>
+    </div>
+    <div class="hhDialog-fuss"><button type="button" data-close autofocus>Schließen</button></div>
+  </dialog>
+
+  <dialog id="impressum" class="hhDialog" aria-labelledby="impressum-titel">
+    <div class="hhDialog-kopf"><h2 id="impressum-titel">Impressum</h2></div>
+    <div class="hhDialog-inhalt hhRecht">
+      <p>Angaben zum Betreiber dieser Seite</p>
+      <dl id="impressumDaten"></dl>
+      <p class="hhKlein">Diese Seite wird mit der Software „Home Assistant Reader free“ betrieben.<span data-fremdbetrieb> Die Herstellerin der Software, die Hammerherren GmbH, betreibt diese Seite nicht (siehe <a href="#ueber" data-legal="ueber" role="button">Über diese Software</a>).</span></p>
+    </div>
+    <div class="hhDialog-fuss"><button type="button" data-close autofocus>Schließen</button></div>
+  </dialog>
+
+  <dialog id="datenschutz" class="hhDialog" aria-labelledby="datenschutz-titel">
+    <div class="hhDialog-kopf"><h2 id="datenschutz-titel">Datenschutz</h2></div>
+    <div class="hhDialog-inhalt hhRecht">
+      <h4>Verantwortlich</h4>
+      <p id="dsVerantwortlich">Verantwortlich für diese Seite ist der Betreiber dieser Home-Assistant-Installation.</p>
+      <p id="dsLink" hidden>Weitere Informationen finden Sie in der <a id="dsLinkA" target="_blank" rel="noopener noreferrer">Datenschutzerklärung des Betreibers</a>.</p>
+      <h4>Wie die Software mit Daten umgeht</h4>
+      <p class="hhKlein">Die folgenden Angaben stammen von der Hammerherren GmbH als Herstellerin der Software „Home Assistant Reader free“ (Stand: 25. November 2026). Sie gelten nur für die unveränderte Software in der Version <span data-version>dieser Auslieferung</span>. Wurde die Software verändert oder um weitere Dienste ergänzt, ist allein der Betreiber für zutreffende Angaben verantwortlich.<span data-fremdbetrieb> Die Hammerherren GmbH erhält aus dieser Installation keine Daten und ist für deren Verarbeitung nicht verantwortlich.</span></p>
+      <h4>Was der Reader tut</h4>
+      <p>Der Reader zeigt ausgewählte Dashboards dieser Home-Assistant-Installation zum Ansehen an – Messwerte, Zustände von Geräten und deren Verlauf. Er kann nichts schalten oder verändern. An Ihren Browser gibt er nur die Werte weiter, die auf dem gewählten Dashboard vorkommen.</p>
+      <h4>Aufruf der Seite</h4>
+      <p>Damit die Seiten ausgeliefert werden können, verarbeitet der Reader beim Aufruf Ihre IP-Adresse und die technischen Angaben Ihres Browsers. Diese Angaben werden nur für die Dauer der Verbindung verwendet und vom Reader nicht gespeichert – er führt keine Zugriffsprotokolle. Der Reader selbst hat keine Anmeldung; wer die Seite erreichen kann, legt der Betreiber fest.</p>
+      <h4>Angezeigte Werte</h4>
+      <p>Werte aus Home Assistant können sich auf Personen beziehen lassen, etwa ob eine Tür geöffnet wurde oder ob jemand anwesend ist. Der Reader speichert diese Werte nicht, sondern reicht sie nur zur Anzeige an Ihren Browser weiter. Gespeichert werden sie in Home Assistant selbst; der Reader ändert daran nichts.</p>
+      <h4>Keine Inhalte von fremden Servern</h4>
+      <p>Programmbibliotheken, Icons und Schriften (siehe <a href="#ueber" data-legal="ueber" role="button">Über diese Software</a>) liegen im Reader selbst; es werden keine Inhalte von fremden Servern nachgeladen. Bilder in Textkarten werden nicht angezeigt.</p>
+      <h4>Keine Cookies, keine Analyse</h4>
+      <p>Der Reader setzt keine Cookies, legt nichts im Browserspeicher ab und enthält keine Analyse- oder Tracking-Dienste.</p>
+      <h4>Links auf andere Websites</h4>
+      <p>Für Inhalte und Datenverarbeitung verlinkter Websites sind deren Betreiber verantwortlich. Beim bloßen Anzeigen eines Links werden keine Daten an die verlinkte Website übertragen.</p>
+      <h4>Ihre Rechte</h4>
+      <p>Sie haben gegenüber dem Betreiber das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wenn Sie meinen, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, können Sie sich bei der zuständigen Datenschutzbehörde beschweren, in Österreich bei der Datenschutzbehörde (<a href="https://www.dsb.gv.at" target="_blank" rel="noopener noreferrer">dsb.gv.at</a>).</p>
+    </div>
+    <div class="hhDialog-fuss"><button type="button" data-close autofocus>Schließen</button></div>
+  </dialog>
+
+  <dialog id="ueber" class="hhDialog" aria-labelledby="ueber-titel">
+    <div class="hhDialog-kopf"><h2 id="ueber-titel">Über diese Software</h2></div>
+    <div class="hhDialog-inhalt hhRecht">
+      <p>Diese Seite wird mit dem <strong>Home Assistant Reader free</strong> <span data-version></span> betrieben.<span data-fremdbetrieb> Die Herstellerin der Software betreibt diese Seite nicht; Fragen zu den angezeigten Inhalten richten Sie bitte an den Betreiber dieser Home-Assistant-Installation.</span></p>
+      <h4>Herstellerin</h4>
+      <dl>
+        <dt>Hammerherren GmbH</dt><dd>Am Irrsee 31, 4893 Tiefgraben, Österreich<br>FN 484094 d, Landesgericht Wels · UID ATU72978423<br>zeilinger@hammerherren.gmbh · <a href="https://hammerherren.gmbh/impressum/" target="_blank" rel="noopener noreferrer">hammerherren.gmbh/impressum</a></dd>
+      </dl>
+      <h4>Lizenz</h4>
+      <p>© 2026 Hammerherren GmbH, alle Rechte vorbehalten. Der Quelltext ist öffentlich einsehbar, steht aber nicht unter einer Open-Source-Lizenz. Für die Installation und Nutzung gelten die Lizenzbedingungen der Hammerherren GmbH (<a href="/LICENSE.txt" target="_blank" rel="noopener">Lizenzbedingungen lesen</a>); sie erlauben insbesondere keine Veränderung der Software.</p>
+      <h4>Anzeige ohne Gewähr</h4>
+      <p>Die Software bemüht sich um eine richtige Darstellung, es kann aber nicht zugesichert werden, dass jeder Wert und jede Karte vollständig und fehlerfrei angezeigt wird. Prüfen Sie wichtige Werte direkt in Home Assistant nach.</p>
+      <h4>Fremde Bestandteile</h4>
+      <ul>
+        <li>marked – © MarkedJS, MIT License (<a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">opensource.org/licenses/MIT</a>)</li>
+        <li>DOMPurify – © Cure53 und Mitwirkende, Apache License 2.0 oder Mozilla Public License 2.0 (<a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">apache.org/licenses/LICENSE-2.0</a>)</li>
+        <li>Apache ECharts – © The Apache Software Foundation, Apache License 2.0 (<a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">apache.org/licenses/LICENSE-2.0</a>)</li>
+        <li>Material Design Icons – © Pictogrammers, Pictogrammers Free License, Icons unter Apache License 2.0 (<a href="https://pictogrammers.com/docs/general/license/" target="_blank" rel="noopener noreferrer">pictogrammers.com</a>)</li>
+        <li>Fastify und @fastify/static – © The Fastify team, MIT License</li>
+        <li>ssh2 – © Brian White, MIT License; ssh2-sftp-client – Apache License 2.0</li>
+        <li>weitere Open-Source-Bibliotheken, die diese benötigen, unter MIT-, ISC-, BSD-, BlueOak-1.0.0-, 0BSD- und Unlicense-Lizenz</li>
+        <li>Schriften Oswald und Source Sans 3 – SIL Open Font License 1.1 (<a href="https://openfontlicense.org" target="_blank" rel="noopener noreferrer">openfontlicense.org</a>)</li>
+      </ul>
+      <p>Für diese Bestandteile gelten ausschließlich ihre eigenen Lizenzen.</p>
+      <h4>Marken</h4>
+      <p>Home Assistant ist eine Marke der Open Home Foundation. Die Hammerherren GmbH ist mit der Open Home Foundation nicht verbunden; der Reader ist kein Produkt von Home Assistant.</p>
+    </div>
+    <div class="hhDialog-fuss"><button type="button" data-close autofocus>Schließen</button></div>
+  </dialog>
+
+  <script src="/vendor/echarts.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

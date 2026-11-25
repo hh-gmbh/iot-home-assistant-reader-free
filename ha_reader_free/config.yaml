@@ -1,0 +1,53 @@
+name: Home Assistant Reader free
+version: "1.1.10"
+slug: ha_reader_free
+description: Nur lesende Ansicht ausgewählter Home-Assistant-Dashboards im Browser – Hammerherren GmbH
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: application
+boot: auto
+homeassistant_api: true
+ports:
+  8443/tcp: 443
+ports_description:
+  8443/tcp: HTTPS-Portal
+map:
+  - ssl:ro
+options:
+  hostname: homeassistant.local
+  cert_source: local
+  sftp_host: ""
+  sftp_port: 22
+  sftp_user: ""
+  sftp_host_key: ""
+  sftp_fullchain_path: /fullchain.pem
+  sftp_privkey_path: /privkey.pem
+  local_fullchain: /ssl/fullchain.pem
+  local_privkey: /ssl/privkey.pem
+  cert_refresh_hours: 24
+  log_level: info
+  betreiber_name: ""
+  betreiber_anschrift: ""
+  betreiber_kontakt: ""
+  betreiber_zusatz: ""
+  betreiber_datenschutz_url: ""
+schema:
+  hostname: str
+  cert_source: list(sftp|local)
+  sftp_host: str?
+  sftp_port: port
+  sftp_user: str?
+  sftp_host_key: str?
+  sftp_fullchain_path: str?
+  sftp_privkey_path: str?
+  local_fullchain: str
+  local_privkey: str
+  cert_refresh_hours: int(1,168)
+  log_level: list(debug|info|warn|error)
+  betreiber_name: str?
+  betreiber_anschrift: str?
+  betreiber_kontakt: str?
+  betreiber_zusatz: str?
+  betreiber_datenschutz_url: str?
