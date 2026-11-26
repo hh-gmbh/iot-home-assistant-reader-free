@@ -1,6 +1,6 @@
 {
   "name": "ha-reader-free",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "private": true,
   "type": "module",
   "description": "Read-only Ansicht der Home-Assistant-Dashboards (Hammerherren GmbH)",
@@ -29,6 +29,7 @@
     "@types/ssh2": "^1.15.6",
     "@types/ssh2-sftp-client": "^9.0.6",
     "jsdom": "^31.0.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "ws": "^8.23.0"
   }
 }

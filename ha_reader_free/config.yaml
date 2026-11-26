@@ -1,5 +1,5 @@
 name: Home Assistant Reader free
-version: "1.1.11"
+version: "1.1.12"
 slug: ha_reader_free
 description: Nur lesende Ansicht ausgewählter Home-Assistant-Dashboards im Browser – Hammerherren GmbH
 arch:

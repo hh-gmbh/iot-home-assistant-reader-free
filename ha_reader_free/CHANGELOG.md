@@ -1,5 +1,14 @@
 # Changelog – Home Assistant Reader free
 
+## 1.1.12
+
+- Behoben: Nach einem Neustart von Home Assistant blieb die Anzeige dauerhaft bei „Keine Verbindung zu Home
+  Assistant“. Der Supervisor nimmt während des Neustarts Verbindungen an, ohne je zu antworten; der Reader wartete
+  darauf unbegrenzt. Jetzt gilt eine Frist von 20 s für Aufbau und Anmeldung, danach wird neu verbunden.
+- Bestehende Verbindungen werden alle 30 s mit einem Lebenszeichen („ping“, kein Datenzugriff) geprüft; bleibt die
+  Antwort aus, wird die Verbindung neu aufgebaut.
+- Das Protokoll nennt jetzt den Grund einer Trennung.
+
 ## 1.1.11
 
 - Das Architekturbild auf der Info-Seite wird jetzt auch auf GitHub angezeigt.

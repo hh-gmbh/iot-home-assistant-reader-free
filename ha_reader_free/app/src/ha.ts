@@ -20,11 +20,30 @@ export const READ_ONLY_TYPES = new Set([
   "recorder/statistics_during_period",
 ]);
 
+export interface HaClientOptionen {
+  /** Freigabeliste der Nachrichtentypen; Standard: READ_ONLY_TYPES */
+  erlaubt?: ReadonlySet<string>;
+  /** Zustände aller Entitäten abonnieren (Standard: ja) */
+  entitaeten?: boolean;
+  /** So lange darf Aufbau + Anmeldung dauern, sonst neuer Versuch (Standard 20 s) */
+  anmeldeFristMs?: number;
+  /** Abstand der Lebenszeichen (HA-„ping“) bei bestehender Verbindung (Standard 30 s) */
+  herzschlagMs?: number;
+  /** So lange wird auf „pong“ gewartet (Standard 10 s) */
+  antwortFristMs?: number;
+  /** Wartezeit bis zum nächsten Versuch (Standard 5 s) */
+  wiederholungMs?: number;
+}
+
 /**
  * Minimaler WebSocket-Client für Home Assistant.
  * Bewusst NUR lesend: es gibt keine Methode für call_service, und request()/subscribe()
  * lehnen Nachrichtentypen außerhalb der Liste READ_ONLY_TYPES ab.
  * Emittiert "connected", "disconnected" und "change" (entity_id, state | null).
+ *
+ * Wächter: Startet HA neu, nimmt der Supervisor-Proxy die Verbindung unter Umständen an und antwortet nie –
+ * ohne Zeitgrenze bliebe der Client dann für immer „getrennt“. Darum gilt eine Frist für Aufbau und
+ * Anmeldung, und eine bestehende Verbindung wird mit „ping“ geprüft. Hängt etwas, wird neu verbunden.
  */
 export class HaClient extends EventEmitter {
   private ws?: WebSocket;
@@ -35,45 +54,140 @@ export class HaClient extends EventEmitter {
   readonly states = new Map<string, EntityState>();
   connected = false;
 
-  constructor(private wsUrl: string, private token: string, private log: (m: string) => void) {
+  private erlaubt: ReadonlySet<string>;
+  private entitaeten: boolean;
+  private anmeldeFristMs: number;
+  private herzschlagMs: number;
+  private antwortFristMs: number;
+  private wiederholungMs: number;
+  private stufe = "Verbindungsaufbau";
+  private frist?: NodeJS.Timeout;
+  private herzschlag?: NodeJS.Timeout;
+  private naechster?: NodeJS.Timeout;
+  private pingId?: number;
+  private beendet = false;
+
+  constructor(private wsUrl: string, private token: string, private log: (m: string) => void, optionen: HaClientOptionen = {}) {
     super();
+    this.erlaubt = optionen.erlaubt ?? READ_ONLY_TYPES;
+    this.entitaeten = optionen.entitaeten ?? true;
+    this.anmeldeFristMs = optionen.anmeldeFristMs ?? 20_000;
+    this.herzschlagMs = optionen.herzschlagMs ?? 30_000;
+    this.antwortFristMs = optionen.antwortFristMs ?? 10_000;
+    this.wiederholungMs = optionen.wiederholungMs ?? 5_000;
   }
 
   start(): void {
+    this.beendet = false;
     this.connect();
   }
 
+  /** Verbindung schließen und nicht mehr neu verbinden (für Tests und Herunterfahren). */
+  stop(): void {
+    this.beendet = true;
+    clearTimeout(this.naechster);
+    const ws = this.ws;
+    if (ws) this.getrennt(ws, "beendet");
+  }
+
   private connect(): void {
-    const ws = new WebSocket(this.wsUrl);
+    if (this.beendet) return;
+    let ws: WebSocket;
+    this.stufe = "Verbindungsaufbau";
+    try {
+      ws = new WebSocket(this.wsUrl);
+    } catch (e) {
+      this.log(`HA-Verbindung nicht möglich: ${(e as Error).message}, neuer Versuch in ${this.wiederholungMs / 1000} s`);
+      this.naechster = setTimeout(() => this.connect(), this.wiederholungMs);
+      return;
+    }
     this.ws = ws;
-    ws.onmessage = (ev) => this.onMessage(JSON.parse(String(ev.data)));
-    ws.onclose = () => {
-      this.connected = false;
-      for (const p of this.pending.values()) p.reject(new Error("Verbindung zu HA getrennt"));
-      this.pending.clear();
-      this.subscriptions.clear(); // Abos gelten nur für diese Verbindung
-      if (this.ws === ws) this.emit("disconnected");
-      this.log("HA-Verbindung getrennt, neuer Versuch in 5 s");
-      setTimeout(() => this.connect(), 5000);
+    this.frist = setTimeout(
+      () => this.getrennt(ws, `keine Antwort von HA (${this.stufe}) nach ${this.anmeldeFristMs / 1000} s`),
+      this.anmeldeFristMs,
+    );
+    ws.onopen = () => {
+      if (this.ws === ws) this.stufe = "warte auf Anmeldeaufforderung";
     };
+    ws.onmessage = (ev) => {
+      if (this.ws !== ws) return; // Nachzügler einer alten Verbindung
+      let msg: any;
+      try {
+        msg = JSON.parse(String(ev.data));
+      } catch {
+        return;
+      }
+      this.onMessage(ws, msg);
+    };
+    ws.onclose = (ev) => this.getrennt(ws, `geschlossen${ev.code ? ` (Code ${ev.code}${ev.reason ? `, ${ev.reason}` : ""})` : ""}`);
     ws.onerror = () => {
       /* onclose folgt */
     };
   }
 
-  private onMessage(msg: any): void {
+  /** Eine Verbindung aufgeben: genau einmal je Verbindung, danach neuer Versuch. */
+  private getrennt(ws: WebSocket, grund: string): void {
+    if (this.ws !== ws) return;
+    this.ws = undefined;
+    clearTimeout(this.frist);
+    clearInterval(this.herzschlag);
+    this.pingId = undefined;
+    ws.onopen = ws.onmessage = ws.onclose = ws.onerror = null;
+    try {
+      ws.close();
+    } catch {
+      /* schon zu */
+    }
+    const warVerbunden = this.connected;
+    this.connected = false;
+    for (const p of this.pending.values()) p.reject(new Error("Verbindung zu HA getrennt"));
+    this.pending.clear();
+    this.subscriptions.clear(); // Abos gelten nur für diese Verbindung
+    if (warVerbunden) this.emit("disconnected");
+    if (this.beendet) return;
+    this.log(`HA-Verbindung getrennt: ${grund}, neuer Versuch in ${this.wiederholungMs / 1000} s`);
+    this.naechster = setTimeout(() => this.connect(), this.wiederholungMs);
+  }
+
+  /** Lebenszeichen: „ping“ (kein Datenzugriff), ohne „pong“ binnen Frist gilt die Verbindung als tot. */
+  private starteHerzschlag(ws: WebSocket): void {
+    clearInterval(this.herzschlag);
+    this.herzschlag = setInterval(() => {
+      if (this.ws !== ws) return;
+      if (this.pingId !== undefined) return this.getrennt(ws, `keine Antwort auf Lebenszeichen nach ${this.antwortFristMs / 1000} s`);
+      const id = this.nextId++;
+      this.pingId = id;
+      ws.send(JSON.stringify({ id, type: "ping" }));
+      clearTimeout(this.frist);
+      this.frist = setTimeout(() => {
+        if (this.pingId === id) this.getrennt(ws, `keine Antwort auf Lebenszeichen nach ${this.antwortFristMs / 1000} s`);
+      }, this.antwortFristMs);
+    }, this.herzschlagMs);
+  }
+
+  private onMessage(ws: WebSocket, msg: any): void {
     switch (msg.type) {
       case "auth_required":
-        this.ws?.send(JSON.stringify({ type: "auth", access_token: this.token }));
+        this.stufe = "Anmeldung";
+        ws.send(JSON.stringify({ type: "auth", access_token: this.token }));
         return;
       case "auth_ok":
+        clearTimeout(this.frist);
         this.connected = true;
         this.log(`Mit Home Assistant ${msg.ha_version} verbunden`);
-        this.subscribeEntities();
+        if (this.entitaeten) this.subscribeEntities();
+        this.starteHerzschlag(ws);
         this.emit("connected");
         return;
       case "auth_invalid":
+        this.stufe = "Anmeldung abgelehnt";
         this.log(`HA-Anmeldung abgelehnt: ${msg.message}`);
+        return;
+      case "pong":
+        if (msg.id === this.pingId) {
+          this.pingId = undefined;
+          clearTimeout(this.frist);
+        }
         return;
       case "result": {
         const p = this.pending.get(msg.id);
@@ -115,7 +229,7 @@ export class HaClient extends EventEmitter {
 
   private send<T>(payload: Record<string, unknown>, onEvent?: (event: any) => void): { id: number; promise: Promise<T> } {
     const type = String(payload.type);
-    if (!READ_ONLY_TYPES.has(type)) {
+    if (!this.erlaubt.has(type)) {
       return { id: -1, promise: Promise.reject(new Error(`Nachrichtentyp ${type} ist im Portal nicht erlaubt (nur lesend)`)) };
     }
     if (!this.ws || !this.connected) return { id: -1, promise: Promise.reject(new Error("Nicht mit HA verbunden")) };
