@@ -1,5 +1,9 @@
 # Changelog – Home Assistant Reader free
 
+## 1.1.11
+
+- Das Architekturbild auf der Info-Seite wird jetzt auch auf GitHub angezeigt.
+
 ## 1.1.10
 
 - Die Option „Betrieben von“ entfällt wieder. Die Fußzeile richtet sich nach dem eingetragenen Namen des Betreibers im Impressum.

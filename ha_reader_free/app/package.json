@@ -1,6 +1,6 @@
 {
   "name": "ha-reader-free",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "private": true,
   "type": "module",
   "description": "Read-only Ansicht der Home-Assistant-Dashboards (Hammerherren GmbH)",
